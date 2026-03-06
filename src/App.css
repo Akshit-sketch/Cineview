@@ -1,0 +1,162 @@
+body{
+background:linear-gradient(
+180deg,
+#0f172a 0%,
+#1e293b 50%,
+#111827 100%
+);
+
+color:#e5e7eb;
+}
+.section-title{
+  margin-top:40px;
+  margin-bottom:15px;
+  font-weight:bold;
+}
+
+/* horizontal scroll */
+.movie-scroll{
+  display:flex;
+  overflow-x:auto;
+  gap:20px;
+  padding-bottom:10px;
+}
+
+/* hide scrollbar */
+.movie-scroll::-webkit-scrollbar{
+  display:none;
+}
+
+.movie-item{
+  min-width:250px;
+  flex-shrink:0;
+}
+
+.movie-card:hover{
+  transform: scale(1.05);
+  cursor:pointer;
+}
+
+.hero-img{
+height:70vh;
+object-fit:cover;
+filter:brightness(60%);
+}
+
+.hero-caption{
+text-align:left;
+bottom:25%;
+}
+
+.hero-caption h2{
+font-size:45px;
+font-weight:bold;
+}
+
+.hero-caption p{
+max-width:500px;
+}
+
+.hero-buttons{
+margin-top:15px;
+}
+
+.search-bar{
+width:350px;
+border-radius:25px;
+padding-left:15px;
+}
+
+
+.popular-section{
+color:white;
+background:black;
+padding:40px 0;
+}
+.people-grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+gap:25px;
+justify-items:center;
+}
+
+.person-card{
+text-align:center;
+}
+
+.person-card img{
+width:110px;
+height:110px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #2b6cb0;
+transition:0.3s;
+}
+
+.person-card img:hover{
+transform:scale(1.1);
+}
+
+.person-card p{
+margin-top:8px;
+font-size:14px;
+font-weight:500;
+}
+
+
+.footer-section{
+margin-top:60px;
+padding:40px 0;
+}
+
+.footer-box{
+background:linear-gradient(135deg,#0f172a,#020617);
+color:white;
+border-radius:20px;
+padding:40px;
+text-align:center;
+}
+
+.footer-content{
+display:flex;
+align-items:center;
+justify-content:center;
+gap:25px;
+}
+
+.footer-icon{
+width:90px;
+}
+
+.footer-bottom{
+margin-top:15px;
+}
+
+.back-top{
+background:none;
+border:none;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+.back-top:hover{
+text-decoration:underline;
+}
+
+.section-title{
+  color:#f1f5f9;
+  font-weight:700;
+  margin-top:40px;
+  margin-bottom:15px;
+  font-size:28px;
+  letter-spacing:0.5px;
+}
+.movie-card{
+  transition:all 0.3s ease;
+}
+
+.movie-card:hover{
+  transform:scale(1.05);
+  box-shadow:0 10px 30px rgba(0,0,0,0.6);
+}

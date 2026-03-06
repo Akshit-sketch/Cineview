@@ -1,38 +1,69 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import { formatDistanceToNow, subDays } from "date-fns";
+import { formatDistanceToNow } from "date-fns";
 
-function Cards({ key, title, description, rating, createdAt }) {
+function Cards({ title, description, rating, createdAt, poster }) {
+
+  const renderStars = () => {
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      if (i <= rating) {
+        stars.push(
+          <i key={i} className="bi bi-star-fill text-warning"></i>
+        );
+      } else {
+        stars.push(
+          <i key={i} className="bi bi-star text-warning"></i>
+        );
+      }
+    }
+
+    return stars;
+  };
+
   return (
-    <>
-      <Card className="mt-3 me-2" style={{ width: "25rem",backgroundColor:'#d4d4d4' }} key={key}>
-        <Card.Body>
-          <div className="row">
-            <div className="col-8">
-              <Card.Title className="fw-bold">{title}</Card.Title>
-            </div>
-            <div className="col-4">
-              <span style={{ fontSize: "30px", fontWeight: "bold" }}>
-                {rating}{" "}
-              </span>
-              <i
-                style={{ fontSize: "30px" }}
-                className="bi bi-star-fill text-warning"
-              ></i>
-            </div>
-            <Card.Text>{description}</Card.Text>
-            <footer className="blockquote-footer mt-3">
-              <i></i>
-              <i>
-                {formatDistanceToNow(new Date(createdAt),
-                  { addSuffix: true }
-                )}
-              </i>
-            </footer>
-          </div>
-        </Card.Body>
-      </Card>
-    </>
+    <Card
+      className="movie-card shadow"
+      style={{
+        width: "250px",
+        borderRadius: "15px",
+        overflow: "hidden",
+        transition: "transform 0.3s ease",
+      }}
+    >
+      
+      {/* Movie Poster */}
+      <Card.Img
+        variant="top"
+        src={poster}
+        style={{
+          height: "330px",
+          objectFit: "cover",
+        }}
+      />
+
+      <Card.Body style={{ background: "rgba(15,23,42,0.95",color: "#e2e8f0" }}>
+        <Card.Title className="fw-bold">{title}</Card.Title>
+
+        {/* Rating */}
+        <div className="mb-2">
+          {renderStars()}
+          <span className="ms-2 fw-bold">{rating}/5</span>
+        </div>
+
+        {/* Description */}
+        <Card.Text style={{ fontSize: "14px",color:"#cbd5f5" }}>
+          {description}
+        </Card.Text>
+
+        {/* Time */}
+        <footer className="blockquote-footer" style={{color:"#94a3b8"}}>
+          {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
+        </footer>
+      </Card.Body>
+
+    </Card>
   );
 }
 
