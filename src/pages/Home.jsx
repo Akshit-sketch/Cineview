@@ -1,28 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+
 import Cards from "../components/Cards";
 import movies from "../data/movies";
+
 import HeroCarousel from "../components/HeroCarousel";
+import GenreFilter from "../components/GenreFilter";
 import PopularPeople from "../components/PopularPeople";
 
 function Home({ search }) {
 
-  const filteredMovies = movies.filter((movie) =>
+  const [selectedGenre, setSelectedGenre] = useState("all");
+
+  const searchFilteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(search.toLowerCase())
   );
 
-  const topMovies = filteredMovies.filter((m) => m.category === "top");
-  const classicMovies = filteredMovies.filter((m) => m.category === "classic");
-  const kidsMovies = filteredMovies.filter((m) => m.category === "kids");
+  const genreFilteredMovies =
+    selectedGenre === "all"
+      ? searchFilteredMovies
+      : searchFilteredMovies.filter((m) => m.genre === selectedGenre);
+
+  const topMovies = genreFilteredMovies.filter((m) => m.category === "top");
+  const classicMovies = genreFilteredMovies.filter((m) => m.category === "classic");
+  const kidsMovies = genreFilteredMovies.filter((m) => m.category === "kids");
 
   return (
     <>
 
-      {/* Hero banner */}
       <HeroCarousel />
+
+      <GenreFilter
+        selectedGenre={selectedGenre}
+        setSelectedGenre={setSelectedGenre}
+      />
 
       <div className="container mt-4">
 
-        {/* Top Movies */}
         <h2 className="section-title">🔥 Top Movies Right Now</h2>
 
         <div className="movie-scroll">
@@ -34,7 +47,6 @@ function Home({ search }) {
         </div>
 
 
-        {/* Classic Movies */}
         <h2 className="section-title">🎬 Classic Blockbusters</h2>
 
         <div className="movie-scroll">
@@ -46,7 +58,6 @@ function Home({ search }) {
         </div>
 
 
-        {/* Kids Movies */}
         <h2 className="section-title">🧸 Kids Movies</h2>
 
         <div className="movie-scroll">
@@ -56,9 +67,10 @@ function Home({ search }) {
             </div>
           ))}
         </div>
-        <PopularPeople />
 
       </div>
+
+      <PopularPeople />
 
     </>
   );
