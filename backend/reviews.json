@@ -1,0 +1,12 @@
+[
+  {
+    "movieId": 1,
+    "user": "Raghav ",
+    "review": "Good movie"
+  },
+  {
+    "movieId": 1,
+    "user": "Pranav",
+    "review": "Amazing\n"
+  }
+]

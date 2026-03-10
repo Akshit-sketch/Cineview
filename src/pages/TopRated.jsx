@@ -8,7 +8,7 @@ function TopRated() {
 
   return (
     <div className="container mt-4">
-      <h2 className="mb-4">⭐ Top Rated Movies</h2>
+      <h2 className="mb-4" style={{color:"#cbd5f5"}}>⭐ Top Rated Movies</h2>
 
       <div className="row">
         {topMovies.map(movie => (
