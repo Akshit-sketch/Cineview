@@ -1,16 +1,19 @@
-import { useParams } from "react-router-dom";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import movies from "../data/movies";
 import Cards from "../components/Cards";
+import { useAuth } from "../context/AuthContext";
 
 function MovieDetails() {
 
 const { id } = useParams();
+const location = useLocation();
+const navigate = useNavigate();
+const { user: authUser, token, isAuthenticated } = useAuth();
 
 const movie = movies.find((m) => m.id === Number(id));
 
 const [reviews, setReviews] = useState([]);
-const [user, setUser] = useState("");
 const [reviewText, setReviewText] = useState("");
 
 /* FETCH REVIEWS FROM BACKEND */
@@ -35,18 +38,24 @@ setReviews(movieReviews);
 
 const submitReview = () => {
 
+if (!isAuthenticated) {
+navigate("/login", { state: { from: location } });
+return;
+}
+
 fetch("http://localhost:3000/reviews",{
 
 method:"POST",
 
 headers:{
-"Content-Type":"application/json"
+"Content-Type":"application/json",
+Authorization:`Bearer ${token}`
 },
 
 body:JSON.stringify({
 
 movieId:movie.id,
-user:user,
+user:authUser?.name || authUser?.email,
 review:reviewText
 
 })
@@ -55,7 +64,6 @@ review:reviewText
 .then(res=>res.json())
 .then(()=>{
 
-setUser("");
 setReviewText("");
 
 window.location.reload();
@@ -142,14 +150,6 @@ reviews.map((r, index) => (
 
 <h4 className="mt-4">Add Review</h4>
 
-<input
-type="text"
-placeholder="Your name"
-className="form-control mb-2"
-value={user}
-onChange={(e)=>setUser(e.target.value)}
-/>
-
 <textarea
 placeholder="Write review..."
 className="form-control mb-2"
@@ -161,7 +161,7 @@ onChange={(e)=>setReviewText(e.target.value)}
 className="btn btn-primary"
 onClick={submitReview}
 >
-Submit Review
+{isAuthenticated ? "Submit Review" : "Login to Review"}
 </button>
 
 <hr className="my-5"/>
