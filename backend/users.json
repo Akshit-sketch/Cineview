@@ -10,5 +10,17 @@
     "name": "Raghav",
     "email": "raghav@gmail.com",
     "password": "$2a$10$xaXewTTeCd4tLsX8aNgYe.tq7QLhCsyt.MNLjuTMSkwApRUVrO3kW"
+  },
+  {
+    "id": "1773241377557",
+    "name": "Pranav",
+    "email": "pranav@gmail.com",
+    "password": "$2a$10$XYsgOdkRIEljEEq0FijsausxvmutSFNT.4lYyeXDRLE71Sh4rkxnq"
+  },
+  {
+    "id": "1773296310322",
+    "name": "piyu",
+    "email": "piyu@gmail.com",
+    "password": "$2a$10$tah6iH9V1Gx6vFoVVnFCtOjzUNNgiWH2jMdEgVbOlsZwAYDNp39y."
   }
 ]

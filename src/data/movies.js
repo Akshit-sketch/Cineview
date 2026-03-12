@@ -20,7 +20,7 @@ id:2,
 title:"Inception",
 rating:4.5,
 createdAt:"2010-07-16",
-poster:"https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg",
+poster:"https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
 category:"top",
 genre:"action",
 description:

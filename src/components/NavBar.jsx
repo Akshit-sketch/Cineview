@@ -30,23 +30,32 @@ function NavBar({ search, setSearch }) {
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" className="shadow">
-      <Container>
+      <Container fluid className="px-3">
 
-        {/* Logo */}
-        <Navbar.Brand as={Link} to="/" className="fw-bold">
-          🎬 CineView
-        </Navbar.Brand>
+        <div className="d-flex align-items-center gap-3 flex-grow-1">
+          {/* Logo + Brand */}
+          <Navbar.Brand as={Link} to="/" className="fw-bold d-flex align-items-center gap-2 m-0">
+            <img
+              src="/starred-ticket.png"
+              alt="CineView"
+              width="28"
+              height="28"
+              style={{ display: "block" }}
+            />
+            <span>CineView</span>
+          </Navbar.Brand>
 
-        {/* Search Bar */}
-        <Form className="d-flex mx-auto">
-          <Form.Control
-            type="search"
-            placeholder="Search for a movie..."
-            className="me-2 search-bar"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </Form>
+          {/* Search Bar (left side, next to logo) */}
+          <Form className="d-flex flex-grow-1" style={{ maxWidth: "520px" }}>
+            <Form.Control
+              type="search"
+              placeholder="Search for a movie..."
+              className="search-bar"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </Form>
+        </div>
 
         <Navbar.Toggle aria-controls="navbar" />
 
@@ -61,9 +70,9 @@ function NavBar({ search, setSearch }) {
               Top Rated
             </Nav.Link>
 
-            <Nav.Link href="/add" onClick={handleAddReviewClick}>
+            {/* <Nav.Link href="/add" onClick={handleAddReviewClick}>
               Add Review
-            </Nav.Link>
+            </Nav.Link> */}
 
             <Nav.Link as={Link} to="/about">
               About
