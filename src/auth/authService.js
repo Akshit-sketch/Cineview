@@ -58,3 +58,21 @@ export async function loginRequest(email, password) {
   return res.json();
 }
 
+export async function updateProfileRequest({ token, name, email, phone, password }) {
+  const res = await fetch(`${API_BASE}/profile`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ name, email, phone, password }),
+  });
+
+  if (!res.ok) {
+    const error = await res.json().catch(() => ({}));
+    throw new Error(error.message || "Failed to update profile");
+  }
+
+  return res.json();
+}
+

@@ -80,7 +80,7 @@ const relatedMovies = movies
 
 return (
 
-<div className="container mt-5 text-light">
+<div className="container mt-5" style={{ color: "var(--text-tertiary)" }}>
 
 {/* MOVIE DETAILS */}
 
@@ -103,7 +103,7 @@ borderRadius:"15px"
 
 <h1 className="mb-3">{movie.title}</h1>
 
-<p className="fs-5 text-warning">
+<p className="fs-5" style={{ color: "var(--accent)" }}>
 ⭐ {movie.rating}/5
 </p>
 
@@ -111,7 +111,7 @@ borderRadius:"15px"
 {movie.description}
 </p>
 
-<p className="text-secondary">
+<p style={{ color: "var(--text-disabled)" }}>
 <b>Release Date:</b> {movie.createdAt}
 </p>
 
@@ -119,9 +119,9 @@ borderRadius:"15px"
 href={movie.trailer}
 target="_blank"
 rel="noreferrer"
-className="btn btn-danger mt-3"
+className="btn btn-primary mt-3"
 >
-▶ Watch Trailer
+Watch Trailer
 </a>
 
 </div>
@@ -168,7 +168,7 @@ onClick={submitReview}
 
 {/* RECOMMENDED MOVIES */}
 
-<h3 className="text-light mb-4">
+<h3 className="mb-4" style={{ color: "var(--text-primary)" }}>
 You Can Also See
 </h3>
 

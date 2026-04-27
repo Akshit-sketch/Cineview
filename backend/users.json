@@ -22,5 +22,31 @@
     "name": "piyu",
     "email": "piyu@gmail.com",
     "password": "$2a$10$tah6iH9V1Gx6vFoVVnFCtOjzUNNgiWH2jMdEgVbOlsZwAYDNp39y."
+  },
+  {
+    "id": "1773396666452",
+    "name": "Paritosh",
+    "email": "paritosh@gmail.com",
+    "password": "$2a$10$clg0B4wuBTV2f/AApv25n.IoG7255z239zaTdmo70YNmmCVYNY2j6"
+  },
+  {
+    "id": "1773399502611",
+    "name": "raghav",
+    "email": "raghav1@gmail.com",
+    "password": "$2a$10$S1Kl1ChMS1FTV1RRdhbb5OK99RlsJ/0pXDneEx6XmEEMgoDkfpR3O"
+  },
+  {
+    "id": "1777293250715",
+    "name": "akshit",
+    "email": "akshitanand254@gmail.com",
+    "password": "$2a$10$LYGK8l2tJNTM1vKlza8aeuLIbQmzjD7e/tCLd64W02HAkv.FyXSEK",
+    "phone": ""
+  },
+  {
+    "id": "1777296344428",
+    "name": "raghav Sharma",
+    "email": "raghav122@gmail.com",
+    "password": "$2a$10$BkVkb7ARHemgeiSong8n7OJKRbeTP9t7WOp467ocqZtwZy7hdCbSO",
+    "phone": ""
   }
 ]

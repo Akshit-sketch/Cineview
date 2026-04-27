@@ -57,7 +57,7 @@ return(
 
 <img src={person.image} alt={person.name} />
 
-<p style={{ color: "#fff" }}>{person.name}</p>
+<p style={{ color: "var(--text-primary)" }}>{person.name}</p>
 
 </div>
 ))}

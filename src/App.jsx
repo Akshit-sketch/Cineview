@@ -10,11 +10,15 @@ import AddPage from "./pages/AddPage";
 import MovieDetails from "./pages/MovieDetails";
 import TopRated from "./pages/TopRated";
 import About from "./pages/About";
+import Profile from "./pages/Profile";
+import Liked from "./pages/Liked";
+import Wishlist from "./pages/Wishlist";
 import Footer from "./components/Footer";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import RequireAuth from "./components/RequireAuth";
 import { AuthProvider } from "./context/AuthContext";
+import { MovieActionsProvider } from "./context/MovieActionsContext";
 
 function App() {
 
@@ -22,7 +26,8 @@ function App() {
 
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <MovieActionsProvider>
+        <BrowserRouter>
 
         {/* Navbar with search */}
         <NavBar search={search} setSearch={setSearch} />
@@ -48,6 +53,30 @@ function App() {
           <Route path="/top" element={<TopRated />} />
 
           <Route path="/about" element={<About />} />
+          <Route
+            path="/profile"
+            element={
+              <RequireAuth>
+                <Profile />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/liked"
+            element={
+              <RequireAuth>
+                <Liked />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/wishlist"
+            element={
+              <RequireAuth>
+                <Wishlist />
+              </RequireAuth>
+            }
+          />
 
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
@@ -55,7 +84,8 @@ function App() {
         </Routes>
         <Footer />
 
-      </BrowserRouter>
+        </BrowserRouter>
+      </MovieActionsProvider>
     </AuthProvider>
   );
 }

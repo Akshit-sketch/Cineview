@@ -1,6 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-import { loginRequest, signupRequest, getStoredAuth, clearStoredAuth, storeAuth } from "../auth/authService";
+import {
+  loginRequest,
+  signupRequest,
+  getStoredAuth,
+  clearStoredAuth,
+  storeAuth,
+  updateProfileRequest,
+} from "../auth/authService";
 
 const AuthContext = createContext(null);
 
@@ -38,12 +45,25 @@ export function AuthProvider({ children }) {
     clearStoredAuth();
   };
 
+  const updateProfile = async (profileData) => {
+    if (!token) throw new Error("You must be logged in");
+    const { user: updatedUser, token: newToken } = await updateProfileRequest({
+      token,
+      ...profileData,
+    });
+    setUser(updatedUser);
+    setToken(newToken);
+    storeAuth(updatedUser, newToken);
+    return updatedUser;
+  };
+
   const value = {
     user,
     token,
     loading,
     login,
     signup,
+    updateProfile,
     logout,
     isAuthenticated: Boolean(user && token),
   };

@@ -21,6 +21,7 @@ app.use(express.json());
 
 const reviewsFilePath = path.join(__dirname, "reviews.json");
 const usersFilePath = path.join(__dirname, "users.json");
+const dataFilePath = path.join(__dirname, "data.json");
 
 function readJsonFileSafe(filePath, fallback = []) {
   try {
@@ -35,6 +36,32 @@ function readJsonFileSafe(filePath, fallback = []) {
 
 function writeJsonFile(filePath, data) {
   return fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
+}
+
+function sanitizeMoviePayload(movie) {
+  if (!movie || !movie.id || !movie.title || !movie.poster) return null;
+  return {
+    id: movie.id,
+    title: movie.title,
+    poster: movie.poster,
+    rating: movie.rating ?? null,
+    description: movie.description || "",
+    createdAt: movie.createdAt || new Date().toISOString(),
+  };
+}
+
+function updateCollection(list = [], movie, action = "toggle") {
+  const exists = list.some((item) => String(item.id) === String(movie.id));
+  const shouldAdd =
+    action === "add" || (action === "toggle" && !exists);
+  const shouldRemove =
+    action === "remove" || (action === "toggle" && exists);
+
+  if (shouldAdd && !exists) return [...list, movie];
+  if (shouldRemove) {
+    return list.filter((item) => String(item.id) !== String(movie.id));
+  }
+  return list;
 }
 
 function generateToken(user) {
@@ -123,6 +150,57 @@ app.post("/login", (req, res) => {
   res.json({ user: safeUser, token });
 });
 
+/* UPDATE PROFILE (AUTH REQUIRED) */
+app.put("/profile", authMiddleware, (req, res) => {
+  const { name, email, phone, password } = req.body || {};
+
+  if (!name || !email) {
+    return res.status(400).json({ message: "Name and email are required" });
+  }
+
+  const users = readJsonFileSafe(usersFilePath, []);
+  const currentUserIndex = users.findIndex((u) => String(u.id) === String(req.user.id));
+
+  if (currentUserIndex < 0) {
+    return res.status(404).json({ message: "User not found" });
+  }
+
+  const emailTaken = users.some(
+    (u, idx) =>
+      idx !== currentUserIndex &&
+      u.email.toLowerCase() === String(email).toLowerCase()
+  );
+
+  if (emailTaken) {
+    return res.status(400).json({ message: "Email already registered" });
+  }
+
+  const existingUser = users[currentUserIndex];
+  const updatedUser = {
+    ...existingUser,
+    name,
+    email,
+    phone: phone || "",
+  };
+
+  if (password && String(password).trim().length > 0) {
+    updatedUser.password = bcrypt.hashSync(password, 10);
+  }
+
+  users[currentUserIndex] = updatedUser;
+  writeJsonFile(usersFilePath, users);
+
+  const token = generateToken(updatedUser);
+  const safeUser = {
+    id: updatedUser.id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    phone: updatedUser.phone || "",
+  };
+
+  res.json({ user: safeUser, token });
+});
+
 /* GET REVIEWS */
 app.get("/reviews", (req, res) => {
   const reviews = readJsonFileSafe(reviewsFilePath, []);
@@ -153,6 +231,52 @@ app.post("/reviews", authMiddleware, (req, res) => {
   } catch (err) {
     res.status(500).send("Error saving review");
   }
+});
+
+/* LIKED */
+app.get("/liked", (req, res) => {
+  const data = readJsonFileSafe(dataFilePath, { liked: [], wishlist: [] });
+  res.json(data.liked || []);
+});
+
+app.post("/liked", (req, res) => {
+  const { movie, action = "toggle" } = req.body || {};
+  const safeMovie = sanitizeMoviePayload(movie);
+  if (!safeMovie) {
+    return res
+      .status(400)
+      .json({ message: "movie with id, title and poster is required" });
+  }
+
+  const data = readJsonFileSafe(dataFilePath, { liked: [], wishlist: [] });
+  const nextLiked = updateCollection(data.liked || [], safeMovie, action);
+  const nextData = { ...data, liked: nextLiked };
+  writeJsonFile(dataFilePath, nextData);
+
+  res.json(nextLiked);
+});
+
+/* WISHLIST */
+app.get("/wishlist", (req, res) => {
+  const data = readJsonFileSafe(dataFilePath, { liked: [], wishlist: [] });
+  res.json(data.wishlist || []);
+});
+
+app.post("/wishlist", (req, res) => {
+  const { movie, action = "toggle" } = req.body || {};
+  const safeMovie = sanitizeMoviePayload(movie);
+  if (!safeMovie) {
+    return res
+      .status(400)
+      .json({ message: "movie with id, title and poster is required" });
+  }
+
+  const data = readJsonFileSafe(dataFilePath, { liked: [], wishlist: [] });
+  const nextWishlist = updateCollection(data.wishlist || [], safeMovie, action);
+  const nextData = { ...data, wishlist: nextWishlist };
+  writeJsonFile(dataFilePath, nextData);
+
+  res.json(nextWishlist);
 });
 
 app.listen(PORT, () => {

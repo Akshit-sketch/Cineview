@@ -6,9 +6,10 @@ function SearchCards({ setMovie, movie }) {
       type="text"
       placeholder="Search"
       style={{
-        backgroundColor: "#b8b8b8",
+        backgroundColor: "var(--bg-card)",
+        border: "1px solid var(--border-input)",
         borderRadius: "7px",
-        color: "black",
+        color: "var(--text-tertiary)",
       }}
       onChange={(e) => setMovie(e.target.value)}
       value={movie}

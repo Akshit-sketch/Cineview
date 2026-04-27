@@ -213,7 +213,6 @@ description:
 "Frozen tells the story of two sisters, Elsa and Anna, in the kingdom of Arendelle. Elsa possesses magical powers that create ice and snow. When her abilities accidentally trap the kingdom in eternal winter, Anna sets off on a daring adventure to save her sister and restore summer.",
 trailer:"https://www.youtube.com/watch?v=TbQm5doF_Uc"
 },
-
 {
 id:17,
 title:"Finding Nemo",

@@ -30,9 +30,20 @@ function Login() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center" style={{ minHeight: "80vh" }}>
-      <div className="card p-4 shadow" style={{ maxWidth: "420px", width: "100%", backgroundColor: "#020617", borderRadius: "16px" }}>
+      <div
+        className="card p-4 shadow"
+        style={{
+          maxWidth: "420px",
+          width: "100%",
+          backgroundColor: "var(--bg-card)",
+          borderColor: "var(--border-default)",
+          borderRadius: "16px",
+        }}
+      >
         <h2 className="text-center mb-3 text-light">Welcome back</h2>
-        <p className="text-center text-secondary mb-4">Log in to continue reviewing movies.</p>
+        <p className="text-center mb-4" style={{ color: "var(--text-disabled)" }}>
+          Log in to continue reviewing movies.
+        </p>
 
         {error && (
           <div className="alert alert-danger py-2">{error}</div>
@@ -72,11 +83,11 @@ function Login() {
           </button>
         </form>
 
-        <p className="text-center text-secondary mt-3 mb-0">
+        <p className="text-center mt-3 mb-0" style={{ color: "var(--text-disabled)" }}>
           Don't have an account?{" "}
           <span
             role="button"
-            className="text-primary"
+            style={{ color: "var(--accent)" }}
             onClick={() => navigate("/signup")}
           >
             Sign up
