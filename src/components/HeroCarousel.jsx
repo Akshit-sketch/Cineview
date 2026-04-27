@@ -61,7 +61,7 @@ alt={movie.title}
 
 <div className="hero-buttons">
 
-<button className="btn btn-light me-2">
+<button className="btn btn-primary me-2">
 Watch Now
 </button>
 

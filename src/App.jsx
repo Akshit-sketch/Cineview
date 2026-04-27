@@ -61,22 +61,8 @@ function App() {
               </RequireAuth>
             }
           />
-          <Route
-            path="/liked"
-            element={
-              <RequireAuth>
-                <Liked />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/wishlist"
-            element={
-              <RequireAuth>
-                <Wishlist />
-              </RequireAuth>
-            }
-          />
+          <Route path="/liked" element={<Liked />} />
+          <Route path="/wishlist" element={<Wishlist />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

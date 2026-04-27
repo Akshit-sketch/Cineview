@@ -1,4 +1,30 @@
 {
-  "liked": [],
-  "wishlist": []
+  "liked": [
+    {
+      "id": 1,
+      "title": "Interstellar",
+      "poster": "https://image.tmdb.org/t/p/w500/nCbkOyOMTEwlEV0LtCOvCnwEONA.jpg",
+      "rating": 5,
+      "description": "Interstellar follows a team of astronauts who travel through a mysterious wormhole in search of a new home for humanity. As Earth faces environmental collapse, former pilot Cooper joins a mission that may save mankind. The crew must navigate dangerous planets and the mysteries of time and space. Along the journey, the story explores love, sacrifice, and the bonds between parents and children.",
+      "createdAt": "2014-11-07"
+    },
+    {
+      "id": 2,
+      "title": "Inception",
+      "poster": "https://image.tmdb.org/t/p/original/8ZTVqvKDQ8emSGUEMjsS4yHAwrp.jpg",
+      "rating": 4.5,
+      "description": "Inception tells the story of Dom Cobb, a thief who steals secrets from within people's dreams. He is offered a chance at redemption if he can accomplish the impossible task of planting an idea into someone's mind. As the team dives deeper into multiple dream layers, the boundaries between dream and reality begin to blur. The film explores perception, memory, and the power of the subconscious.",
+      "createdAt": "2010-07-16"
+    }
+  ],
+  "wishlist": [
+    {
+      "id": 1,
+      "title": "Interstellar",
+      "poster": "https://image.tmdb.org/t/p/w500/nCbkOyOMTEwlEV0LtCOvCnwEONA.jpg",
+      "rating": 5,
+      "description": "Interstellar follows a team of astronauts who travel through a mysterious wormhole in search of a new home for humanity. As Earth faces environmental collapse, former pilot Cooper joins a mission that may save mankind. The crew must navigate dangerous planets and the mysteries of time and space. Along the journey, the story explores love, sacrifice, and the bonds between parents and children.",
+      "createdAt": "2014-11-07"
+    }
+  ]
 }
