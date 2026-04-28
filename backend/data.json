@@ -23,6 +23,14 @@
       "rating": 4.5,
       "description": "Oppenheimer is a historical drama about J. Robert Oppenheimer, the physicist who led the Manhattan Project. The film explores the development of the atomic bomb and the moral dilemmas faced by the scientists involved. As the weapon reshapes the future of warfare and politics, Oppenheimer must confront the consequences of his creation.",
       "createdAt": "2023-07-21"
+    },
+    {
+      "id": 1198994,
+      "title": "Send Help",
+      "poster": "https://image.tmdb.org/t/p/w500/mjkS2iAgWj3ik1DTjvI15nHZ7yl.jpg",
+      "rating": 4,
+      "description": "Two colleagues become stranded on a deserted island, the only survivors of a plane crash. On the island, they must overcome past grievances and work together to survive, but ultimately, it's a battle of wills and wits to make it out alive.",
+      "createdAt": "2026-01-22"
     }
   ],
   "wishlist": [
@@ -41,6 +49,14 @@
       "rating": 4.5,
       "description": "Oppenheimer is a historical drama about J. Robert Oppenheimer, the physicist who led the Manhattan Project. The film explores the development of the atomic bomb and the moral dilemmas faced by the scientists involved. As the weapon reshapes the future of warfare and politics, Oppenheimer must confront the consequences of his creation.",
       "createdAt": "2023-07-21"
+    },
+    {
+      "id": 1470130,
+      "title": "The Mortuary Assistant",
+      "poster": "https://image.tmdb.org/t/p/w500/72AoFPC5TY4DfJwXXS9rPwPeReD.jpg",
+      "rating": 3,
+      "description": "Rebecca Owens, a recent mortuary science graduate takes a night shift job at River Fields Mortuary. Initially, the job seems straightforward — embalming bodies, completing paperwork, and keeping things tidy. But once Rebecca starts working the night shift, things take a dark turn.",
+      "createdAt": "2026-02-13"
     }
   ]
 }

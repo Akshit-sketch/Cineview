@@ -19,9 +19,9 @@ import Signup from "./pages/Signup";
 import RequireAuth from "./components/RequireAuth";
 import { AuthProvider } from "./context/AuthContext";
 import { MovieActionsProvider } from "./context/MovieActionsContext";
+import PersonDetails from "./pages/PersonDetails";
 
 function App() {
-
   const [search, setSearch] = useState("");
 
   return (
@@ -49,6 +49,7 @@ function App() {
           />
 
           <Route path="/movie/:id" element={<MovieDetails />} />
+          <Route path="/person/:id" element={<PersonDetails />} />
 
           <Route path="/top" element={<TopRated />} />
 
