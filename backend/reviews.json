@@ -34,5 +34,12 @@
     "review": "amazing",
     "userId": "1773399502611",
     "createdAt": "2026-03-13T10:58:35.535Z"
+  },
+  {
+    "movieId": 1,
+    "user": "raghav2626",
+    "review": "nice movie",
+    "userId": "1777361292825",
+    "createdAt": "2026-04-28T07:29:01.306Z"
   }
 ]

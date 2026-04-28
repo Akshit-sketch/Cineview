@@ -15,6 +15,14 @@
       "rating": 4.5,
       "description": "Inception tells the story of Dom Cobb, a thief who steals secrets from within people's dreams. He is offered a chance at redemption if he can accomplish the impossible task of planting an idea into someone's mind. As the team dives deeper into multiple dream layers, the boundaries between dream and reality begin to blur. The film explores perception, memory, and the power of the subconscious.",
       "createdAt": "2010-07-16"
+    },
+    {
+      "id": 3,
+      "title": "Oppenheimer",
+      "poster": "https://image.tmdb.org/t/p/w500/ptpr0kGAckfQkJeJIt8st5dglvd.jpg",
+      "rating": 4.5,
+      "description": "Oppenheimer is a historical drama about J. Robert Oppenheimer, the physicist who led the Manhattan Project. The film explores the development of the atomic bomb and the moral dilemmas faced by the scientists involved. As the weapon reshapes the future of warfare and politics, Oppenheimer must confront the consequences of his creation.",
+      "createdAt": "2023-07-21"
     }
   ],
   "wishlist": [
@@ -25,6 +33,14 @@
       "rating": 5,
       "description": "Interstellar follows a team of astronauts who travel through a mysterious wormhole in search of a new home for humanity. As Earth faces environmental collapse, former pilot Cooper joins a mission that may save mankind. The crew must navigate dangerous planets and the mysteries of time and space. Along the journey, the story explores love, sacrifice, and the bonds between parents and children.",
       "createdAt": "2014-11-07"
+    },
+    {
+      "id": 3,
+      "title": "Oppenheimer",
+      "poster": "https://image.tmdb.org/t/p/w500/ptpr0kGAckfQkJeJIt8st5dglvd.jpg",
+      "rating": 4.5,
+      "description": "Oppenheimer is a historical drama about J. Robert Oppenheimer, the physicist who led the Manhattan Project. The film explores the development of the atomic bomb and the moral dilemmas faced by the scientists involved. As the weapon reshapes the future of warfare and politics, Oppenheimer must confront the consequences of his creation.",
+      "createdAt": "2023-07-21"
     }
   ]
 }
