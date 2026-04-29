@@ -4,7 +4,7 @@ import Cards from "../components/Cards";
 import HeroCarousel from "../components/HeroCarousel";
 import GenreFilter from "../components/GenreFilter";
 import PopularPeople from "../components/PopularPeople";
-import { fetchPopularMovies } from "../services/tmdb";
+import { fetchPopularMovies, searchMovies } from "../services/tmdb";
 
 function Home({ search }) {
   const [selectedGenre, setSelectedGenre] = useState("all");
@@ -13,23 +13,28 @@ function Home({ search }) {
   // ✅ Fetch from TMDB
   useEffect(() => {
     const loadMovies = async () => {
-      const data = await fetchPopularMovies();
-      setMovies(data);
+      if (search.trim() === "") {
+        const data = await fetchPopularMovies();
+        setMovies(data);
+      } else {
+        const data = await searchMovies(search);
+        setMovies(data);
+      }
     };
 
-    loadMovies();
-  }, []);
+    // Debounce the search to prevent too many API requests while typing
+    const timeoutId = setTimeout(() => {
+      loadMovies();
+    }, 500);
 
-  // 🔍 Search filter
-  const searchFilteredMovies = movies.filter((movie) =>
-    movie.title.toLowerCase().includes(search.toLowerCase())
-  );
+    return () => clearTimeout(timeoutId);
+  }, [search]);
 
   // 🎭 Genre filter (temporary - TMDB genres need mapping later)
   const genreFilteredMovies =
     selectedGenre === "all"
-      ? searchFilteredMovies
-      : searchFilteredMovies;
+      ? movies
+      : movies;
 
   // 🎬 Since TMDB doesn't give category like "top/classic/kids"
   const topMovies = genreFilteredMovies.slice(0, 10);

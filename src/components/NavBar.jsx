@@ -6,8 +6,7 @@ import Form from "react-bootstrap/Form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useMovieActions } from "../context/MovieActionsContext";
-import movies from "../data/movies";
-
+import { searchMovies } from "../services/tmdb";
 function NavBar({ search, setSearch }) {
   const { user, isAuthenticated, logout } = useAuth();
   const { likedMovies, wishlistMovies } = useMovieActions();
@@ -37,10 +36,30 @@ function NavBar({ search, setSearch }) {
     return () => document.removeEventListener("mousedown", handleDocumentClick);
   }, []);
 
-  const searchResults = useMemo(() => {
-    if (!debouncedSearch) return [];
-    const query = debouncedSearch.toLowerCase();
-    return movies.filter((movie) => movie.title.toLowerCase().includes(query)).slice(0, 8);
+  const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    let active = true;
+    if (!debouncedSearch) {
+      setSearchResults([]);
+      return;
+    }
+
+    const fetchResults = async () => {
+      try {
+        const results = await searchMovies(debouncedSearch);
+        if (active) {
+          setSearchResults(results.slice(0, 8));
+        }
+      } catch (err) {
+        console.error("Error searching movies in NavBar:", err);
+      }
+    };
+
+    fetchResults();
+    return () => {
+      active = false;
+    };
   }, [debouncedSearch]);
 
   const exactMatch = useMemo(() => {

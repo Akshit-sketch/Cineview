@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Alert from "react-bootstrap/Alert";
+import { getStoredAuth } from "../auth/authService";
 
 function AddPage() {
   const [title, setTitle] = useState("");
@@ -7,21 +8,33 @@ function AddPage() {
   const [rating, setRating] = useState(0);
   const [successAlert, setSuccessAlert] = useState(false);
   const [failureAlert, setFailureAlert] = useState(false);
+  
   const submition = async (e) => {
     e.preventDefault();
     setFailureAlert(false);
     setSuccessAlert(false);
-    const data = { title, description, rating };
-    console.log(data);
-    const res = await fetch(import.meta.env.VITE_BACKEND_URL, {
+    
+    const auth = getStoredAuth();
+    if (!auth?.token) {
+      setFailureAlert(true);
+      return;
+    }
+
+    const payload = {
+      movieId: "custom-" + Date.now(),
+      title,
+      review: description,
+      rating
+    };
+
+    const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/reviews`, {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
       headers: {
         "Content-type": "application/json; charset=UTF-8",
+        "Authorization": `Bearer ${auth.token}`
       },
     });
-
-    const json = res.json();
 
     if (res.ok) {
       console.log("Create successfully");
@@ -30,15 +43,10 @@ function AddPage() {
       setTitle("");
       setDescription("");
       setRating(0);
-    }
-
-    if (!res.ok) {
+    } else {
       console.log("Something went wrong.Please Try again Later");
       setSuccessAlert(false);
       setFailureAlert(true);
-      setTitle("");
-      setDescription("");
-      setRating(0);
     }
   };
 

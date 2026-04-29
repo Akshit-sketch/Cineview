@@ -25,6 +25,26 @@ export const fetchPopularMovies = async () => {
   }));
 };
 
+export const searchMovies = async (query) => {
+  if (!query) return [];
+  const res = await fetch(
+    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(query)}`
+  );
+  const data = await res.json();
+
+  return data.results.map((movie) => ({
+    id: movie.id,
+    title: movie.title,
+    description: movie.overview,
+    poster: movie.poster_path
+      ? `${IMG_BASE}${movie.poster_path}`
+      : "/fallback.jpg",
+    rating: Math.round(movie.vote_average / 2),
+    createdAt: movie.release_date,
+    year: movie.release_date?.split("-")[0] || "N/A",
+  }));
+};
+
 export const fetchMovieDetails = async (id) => {
   const res = await fetch(
     `${BASE_URL}/movie/${id}?api_key=${API_KEY}`
