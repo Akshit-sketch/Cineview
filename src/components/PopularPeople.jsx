@@ -24,7 +24,7 @@ function PopularPeople() {
 
   return (
     <div className="container mt-5">
-      <h2 className="section-title">⭐ Trending Personalities</h2>
+      <h2 className="section-title">⭐ Trending Celebrities (Active This Year)</h2>
 
       <div className="d-flex flex-wrap gap-4 justify-content-center">
         {people.map((person) => (

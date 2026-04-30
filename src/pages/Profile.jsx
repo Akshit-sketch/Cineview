@@ -190,20 +190,40 @@ function Profile() {
                 </div>
               </div>
 
-              {!isEditing ? (
-                <button
-                  type="button"
-                  className="btn profile-btn mt-4"
-                  onClick={handleEditClick}
-                >
-                  Edit Profile
-                </button>
-              ) : (
-                <button type="submit" className="btn profile-btn mt-4" disabled={isSaving}>
-                  {isSaving ? "Saving..." : "Save"}
-                </button>
+              {isEditing && (
+                <div className="d-flex gap-2 mt-4">
+                  <button type="submit" className="btn profile-btn" disabled={isSaving}>
+                    {isSaving ? (
+                      <><i className="bi bi-hourglass-split me-2"></i>Saving...</>
+                    ) : (
+                      <><i className="bi bi-check-circle-fill me-2"></i>Save Changes</>
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-outline-secondary"
+                    onClick={() => {
+                      setForm(originalForm);
+                      setIsEditing(false);
+                      setErrorMessage("");
+                      setSuccessMessage("");
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </div>
               )}
             </form>
+
+            {!isEditing && (
+              <button
+                type="button"
+                className="btn profile-btn mt-4"
+                onClick={handleEditClick}
+              >
+                <i className="bi bi-pencil-fill me-2"></i>Edit Profile
+              </button>
+            )}
           </section>
 
           <aside className="profile-contact-card">

@@ -17,6 +17,10 @@ export const fetchPopularMovies = async () => {
       ? `${IMG_BASE}${movie.poster_path}`
       : "/fallback.jpg",
 
+    image: movie.backdrop_path
+      ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}`
+      : (movie.poster_path ? `${IMG_BASE}${movie.poster_path}` : "/fallback.jpg"),
+
     rating: Math.round(movie.vote_average / 2), 
 
     createdAt: movie.release_date, 
@@ -66,15 +70,77 @@ export const fetchMovieDetails = async (id) => {
   };
 };
 
-export const fetchTrendingPeople = async () => {
+export const fetchMovieTrailer = async (id) => {
   try {
     const res = await fetch(
-      `${BASE_URL}/trending/person/week?api_key=${API_KEY}`
+      `${BASE_URL}/movie/${id}/videos?api_key=${API_KEY}`
+    );
+    const data = await res.json();
+    if (data.results) {
+      const trailer = data.results.find(
+        (video) => video.site === "YouTube" && video.type === "Trailer"
+      );
+      if (trailer) {
+        return trailer.key;
+      }
+      const anyVideo = data.results.find((video) => video.site === "YouTube");
+      if (anyVideo) return anyVideo.key;
+    }
+    return null;
+  } catch (err) {
+    console.error("Error fetching trailer:", err);
+    return null;
+  }
+};
+
+export const fetchTrendingPeople = async () => {
+  try {
+    const oneYearAgo = new Date();
+    oneYearAgo.setFullYear(oneYearAgo.getFullYear() - 1);
+
+    const allResults = [];
+    // Fetch 2 pages to ensure we have enough people after filtering
+    for (let page = 1; page <= 2; page++) {
+      const res = await fetch(
+        `${BASE_URL}/person/popular?api_key=${API_KEY}&page=${page}`
+      );
+      const data = await res.json();
+      if (data.results) {
+        allResults.push(...data.results);
+      }
+    }
+
+    const peopleWithRecentMovies = [];
+
+    await Promise.all(
+      allResults.map(async (person) => {
+        try {
+          const creditsRes = await fetch(
+            `${BASE_URL}/person/${person.id}/movie_credits?api_key=${API_KEY}`
+          );
+          const credits = await creditsRes.json();
+
+          const hasRecentMovie =
+            credits.cast &&
+            credits.cast.some((movie) => {
+              if (!movie.release_date) return false;
+              const releaseDate = new Date(movie.release_date);
+              return releaseDate >= oneYearAgo;
+            });
+
+          if (hasRecentMovie) {
+            peopleWithRecentMovies.push(person);
+          }
+        } catch (error) {
+          console.error(`Error fetching credits for person ${person.id}:`, error);
+        }
+      })
     );
 
-    const data = await res.json();
+    // Sort by popularity again since Promise.all doesn't guarantee order
+    peopleWithRecentMovies.sort((a, b) => b.popularity - a.popularity);
 
-    return data.results.map((person) => ({
+    return peopleWithRecentMovies.map((person) => ({
       id: person.id,
       name: person.name,
 

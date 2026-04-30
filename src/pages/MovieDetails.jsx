@@ -2,7 +2,9 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Cards from "../components/Cards";
 import { useAuth } from "../context/AuthContext";
-import { fetchMovieDetails, fetchPopularMovies } from "../services/tmdb";
+import { fetchMovieDetails, fetchPopularMovies, fetchMovieTrailer } from "../services/tmdb";
+import Modal from "react-bootstrap/Modal";
+import { formatDistanceToNow } from "date-fns";
 
 function MovieDetails() {
   const { id } = useParams();
@@ -14,6 +16,23 @@ function MovieDetails() {
   const [movies, setMovies] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [reviewText, setReviewText] = useState("");
+
+  const [showTrailer, setShowTrailer] = useState(false);
+  const [trailerKey, setTrailerKey] = useState(null);
+
+  const handlePlayTrailer = async () => {
+    if (!isAuthenticated) {
+      navigate("/login", { state: { from: location } });
+      return;
+    }
+    const key = await fetchMovieTrailer(id);
+    if (key) {
+      setTrailerKey(key);
+      setShowTrailer(true);
+    } else {
+      alert("Trailer not found!");
+    }
+  };
 
   // 🎬 Fetch current movie details
   useEffect(() => {
@@ -45,7 +64,7 @@ function MovieDetails() {
       .then((res) => res.json())
       .then((data) => {
         const movieReviews = data.filter(
-          (r) => r.movieId === movie.id
+          (r) => String(r.movieId) === String(movie.id)
         );
         setReviews(movieReviews);
       });
@@ -89,10 +108,10 @@ function MovieDetails() {
 
   return (
     <div className="container mt-5" style={{ color: "var(--text-tertiary)" }}>
-      
+
       {/* 🎬 MOVIE DETAILS */}
       <div className="row align-items-center">
-        
+
         <div className="col-md-4">
           <img
             src={movie.poster}
@@ -126,6 +145,24 @@ function MovieDetails() {
           <p>
             <b>Genres:</b> {movie.genres || "N/A"}
           </p>
+
+          <button className="btn btn-primary mt-3 mb-4" onClick={handlePlayTrailer}>
+            <i className="bi bi-play-fill me-2"></i> Watch Trailer
+          </button>
+
+          {/* ✍️ REVIEW FORM */}
+          <div className="mt-4">
+            <h4 className="mb-3">Add Review</h4>
+            <textarea
+              placeholder="Write review..."
+              className="form-control mb-2"
+              value={reviewText}
+              onChange={(e) => setReviewText(e.target.value)}
+            />
+            <button className="btn btn-primary" onClick={submitReview}>
+              {isAuthenticated ? "Submit Review" : "Login to Review"}
+            </button>
+          </div>
         </div>
       </div>
 
@@ -138,25 +175,26 @@ function MovieDetails() {
         <p>No reviews yet</p>
       ) : (
         reviews.map((r, index) => (
-          <p key={index}>
-            <b>{r.user}:</b> {r.review}
-          </p>
+          <div key={index} className="mb-4 p-4 rounded shadow-sm" style={{ backgroundColor: "var(--bg-card)", border: "1px solid var(--border-default)" }}>
+            <div className="d-flex align-items-center mb-3">
+              <i className="bi bi-person-circle fs-3 me-3" style={{ color: "var(--accent)" }}></i>
+              <div>
+                <h6 className="mb-0 fw-bold fs-5" style={{ color: "var(--text-primary)", letterSpacing: "0.5px" }}>{r.user}</h6>
+                {r.createdAt && (
+                  <small style={{ color: "var(--text-disabled)", fontSize: "0.85rem" }}>
+                    {formatDistanceToNow(new Date(r.createdAt), { addSuffix: true })}
+                  </small>
+                )}
+              </div>
+            </div>
+            <p className="mb-0" style={{ color: "var(--text-secondary)", lineHeight: "1.7", fontSize: "1.05rem" }}>
+              "{r.review}"
+            </p>
+          </div>
         ))
       )}
 
-      {/* ✍️ REVIEW FORM */}
-      <h4 className="mt-4">Add Review</h4>
 
-      <textarea
-        placeholder="Write review..."
-        className="form-control mb-2"
-        value={reviewText}
-        onChange={(e) => setReviewText(e.target.value)}
-      />
-
-      <button className="btn btn-primary" onClick={submitReview}>
-        {isAuthenticated ? "Submit Review" : "Login to Review"}
-      </button>
 
       <hr className="my-5" />
 
@@ -172,6 +210,27 @@ function MovieDetails() {
           </div>
         ))}
       </div>
+
+      {/* 🎬 Trailer Modal */}
+      <Modal show={showTrailer} onHide={() => setShowTrailer(false)} size="lg" centered>
+        <Modal.Header closeButton className="bg-dark text-white border-secondary">
+          <Modal.Title>{movie?.title} - Trailer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="bg-dark p-0">
+          {trailerKey ? (
+            <div className="ratio ratio-16x9">
+              <iframe
+                src={`https://www.youtube.com/embed/${trailerKey}?autoplay=1`}
+                title="YouTube video player"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
+          ) : (
+            <div className="p-4 text-center text-white">Trailer not available</div>
+          )}
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }

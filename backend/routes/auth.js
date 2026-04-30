@@ -56,7 +56,7 @@ router.post("/signup", async (req, res) => {
     });
 
     const token = generateToken(newUser);
-    const safeUser = { id: newUser.id, name: newUser.name, email: newUser.email };
+    const safeUser = { id: newUser.id, name: newUser.name, email: newUser.email, phone: newUser.phone || "" };
 
     res.json({ user: safeUser, token });
   } catch (err) {
@@ -85,7 +85,7 @@ router.post("/login", async (req, res) => {
     }
 
     const token = generateToken(user);
-    const safeUser = { id: user.id, name: user.name, email: user.email };
+    const safeUser = { id: user.id, name: user.name, email: user.email, phone: user.phone || "" };
 
     res.json({ user: safeUser, token });
   } catch (err) {
